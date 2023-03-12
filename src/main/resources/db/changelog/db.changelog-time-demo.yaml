@@ -1,0 +1,87 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table
+      author: cliffdurden
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: time_demo
+      changes:
+        - createTable:
+            tableName: time_demo
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_pkey
+                  type: BIGINT
+              - column:
+                  name: sample_name
+                  constraints:
+                    nullable: false
+                    unique: true
+                  type: varchar2
+              - column:
+                  name: created_at_without_tz
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_with_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_2_without_tz
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_2_with_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_3_without_tz
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_3_with_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_4_without_tz
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_4_without_tz_offset
+                  constraints:
+                    nullable: false
+                  type: integer
+                  defaultValue: "-3600"
+              - column:
+                  name: created_at_4_with_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_4_with_tz_offset
+                  constraints:
+                    nullable: false
+                  type: integer
+                  defaultValue: "-3600"

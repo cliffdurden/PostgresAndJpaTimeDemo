@@ -1,0 +1,35 @@
+spring:
+  application.name: postgres-and-jpa-time-demo
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    #  hikari:
+    #   connection-init-sql: SET TIME ZONE 'Australia/Sydney'
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    #show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        #use_sql_comments: true
+        #jdbc:
+        #  time_zone: "America/New_York"
+
+  liquibase:
+    changeLog: "classpath:db/changelog/db.changelog.yaml"
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+
+logging:
+  level:
+    root: info
+    #liquibase: debug
+    #org.hibernate.type: trace
+    #org.hibernate.SQL: debug
+    #org.hibernate.orm.jdbc.bind: trace
+    #org.springframework.transaction: trace
+    #org.springframework.orm.jpa: trace
+
