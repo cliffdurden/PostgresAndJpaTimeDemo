@@ -26,61 +26,97 @@ databaseChangeLog:
                     unique: true
                   type: varchar2
               - column:
-                  name: created_at_without_tz
+                  name: created_at_ldt
                   constraints:
                     nullable: false
                   type: timestamp
                   defaultValue: now()
               - column:
-                  name: created_at_with_tz
+                  name: created_at_ldt_tz
                   constraints:
                     nullable: false
                   type: timestamptz
                   defaultValue: now()
               - column:
-                  name: created_at_2_without_tz
+                  name: created_at_odt
                   constraints:
                     nullable: false
                   type: timestamp
                   defaultValue: now()
               - column:
-                  name: created_at_2_with_tz
+                  name: created_at_odt_tz
                   constraints:
                     nullable: false
                   type: timestamptz
                   defaultValue: now()
               - column:
-                  name: created_at_3_without_tz
+                  name: created_at_zdt
                   constraints:
                     nullable: false
                   type: timestamp
                   defaultValue: now()
               - column:
-                  name: created_at_3_with_tz
+                  name: created_at_zdt_tz
                   constraints:
                     nullable: false
                   type: timestamptz
                   defaultValue: now()
               - column:
-                  name: created_at_4_without_tz
+                  name: created_at_tstmp
                   constraints:
                     nullable: false
                   type: timestamp
                   defaultValue: now()
               - column:
-                  name: created_at_4_without_tz_offset
+                  name: created_at_tstmp_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_complex
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_complex_offset
                   constraints:
                     nullable: false
                   type: integer
                   defaultValue: "-3600"
               - column:
-                  name: created_at_4_with_tz
+                  name: created_at_odt_complex_tz
                   constraints:
                     nullable: false
                   type: timestamptz
                   defaultValue: now()
               - column:
-                  name: created_at_4_with_tz_offset
+                  name: created_at_odt_complex_tz_offset
+                  constraints:
+                    nullable: false
+                  type: integer
+                  defaultValue: "-3600"
+              - column:
+                  name: created_at_zdt_complex
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_zdt_complex_offset
+                  constraints:
+                    nullable: false
+                  type: integer
+                  defaultValue: "-3600"
+              - column:
+                  name: created_at_zdt_complex_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_zdt_complex_tz_offset
                   constraints:
                     nullable: false
                   type: integer

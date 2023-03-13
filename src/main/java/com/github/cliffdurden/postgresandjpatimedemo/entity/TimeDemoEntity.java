@@ -1,13 +1,11 @@
 package com.github.cliffdurden.postgresandjpatimedemo.entity;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 
 import java.time.*;
-
-import static org.hibernate.annotations.TimeZoneStorageType.*;
 
 
 @NoArgsConstructor
@@ -28,55 +26,83 @@ public class TimeDemoEntity {
     private String sampleName;
 
     @Column(
-            name = "created_at_without_tz",
+            name = "created_at_ldt",
             columnDefinition = "timestamp default now()"
     )
-    private LocalDateTime createdAtWithoutTz;
+    private LocalDateTime createdAtLdt;
 
     @Column(
-            name = "created_at_with_tz",
+            name = "created_at_ldt_tz",
             columnDefinition = "timestamptz default now()"
     )
-    private LocalDateTime createdAtWithTz;
+    private LocalDateTime createdAtLdtTz;
 
     @Column(
-            name = "created_at_2_without_tz",
+            name = "created_at_odt",
             columnDefinition = "timestamp default now()"
     )
-    private OffsetDateTime createdAt2WithoutTz;
+    private OffsetDateTime createdAtOdt;
 
     @Column(
-            name = "created_at_2_with_tz",
+            name = "created_at_odt_tz",
             columnDefinition = "timestamptz default now()"
     )
-    private OffsetDateTime createdAt2WithTz;
+    private OffsetDateTime createdAtOdtTz;
 
     @Column(
-            name = "created_at_3_without_tz",
+            name = "created_at_zdt",
             columnDefinition = "timestamp default now()"
     )
-    private java.sql.Timestamp createdAt3WithoutTz;
+    private ZonedDateTime createdAtZdt;
 
     @Column(
-            name = "created_at_3_with_tz",
+            name = "created_at_zdt_tz",
             columnDefinition = "timestamptz default now()"
     )
-    private java.sql.Timestamp createdAt3WithTz;
+    private ZonedDateTime createdAtZdtTz;
 
     @Column(
-            name = "created_at_4_without_tz",
+            name = "created_at_tstmp",
+            columnDefinition = "timestamp default now()"
+    )
+    private java.sql.Timestamp createdAtTstmp;
+
+    @Column(
+            name = "created_at_tstmp_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    private java.sql.Timestamp createdAtTstmpTz;
+
+    @Column(
+            name = "created_at_odt_complex",
             columnDefinition = "timestamp default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_4_without_tz_offset")
-    private OffsetDateTime createdAt4WithoutTz;
+    @TimeZoneColumn(name = "created_at_odt_complex_offset")
+    private OffsetDateTime createdAtOdtComplex;
 
     @Column(
-            name = "created_at_4_with_tz",
+            name = "created_at_odt_complex_tz",
             columnDefinition = "timestamptz default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_4_with_tz_offset")
-    private OffsetDateTime createdAt4WithTz;
+    @TimeZoneColumn(name = "created_at_odt_complex_tz_offset")
+    private OffsetDateTime createdAtOdtComplexTz;
+
+    @Column(
+            name = "created_at_zdt_complex",
+            columnDefinition = "timestamp default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.COLUMN)
+    @TimeZoneColumn(name = "created_at_zdt_complex_offset")
+    private ZonedDateTime createdAtZdtComplex;
+
+    @Column(
+            name = "created_at_zdt_complex_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.COLUMN)
+    @TimeZoneColumn(name = "created_at_zdt_complex_tz_offset")
+    private ZonedDateTime createdAtZdtComplexTz;
 
 }

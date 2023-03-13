@@ -12,12 +12,12 @@ public class TimeUtil {
 
     public static void printCurrentTime() {
         log.info("===============================================================================");
-        log.info("Time at Asia/Tokyo: {}", LocalDateTime.now(ZoneId.of("Asia/Tokyo")));
-        log.info("Time at Australia/Sydney: {}", LocalDateTime.now(ZoneId.of("Australia/Sydney")));
-        log.info("Time at Asia/Kolkata: {}", LocalDateTime.now(ZoneId.of("Asia/Kolkata")));
-        log.info("Time at Europe/London: {}", LocalDateTime.now(ZoneId.of("Europe/London")));
-        log.info("Time at America/New_York: {}", LocalDateTime.now(ZoneId.of("America/New_York")));
-        log.info("Time at America/Los_Angeles: {}", LocalDateTime.now(ZoneId.of("America/Los_Angeles")));
+        log.info("Time at Asia/Tokyo: {}", ZonedDateTime.now(ZoneId.of("Asia/Tokyo")));
+        log.info("Time at Australia/Sydney: {}", ZonedDateTime.now(ZoneId.of("Australia/Sydney")));
+        log.info("Time at Asia/Kolkata: {}", ZonedDateTime.now(ZoneId.of("Asia/Kolkata")));
+        log.info("Time at Europe/London: {}", ZonedDateTime.now(ZoneId.of("Europe/London")));
+        log.info("Time at America/New_York: {}", ZonedDateTime.now(ZoneId.of("America/New_York")));
+        log.info("Time at America/Los_Angeles: {}", ZonedDateTime.now(ZoneId.of("America/Los_Angeles")));
         log.info("===============================================================================");
     }
 
