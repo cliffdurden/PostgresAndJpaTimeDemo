@@ -41,18 +41,18 @@ America/Los_Angeles: 2023-03-13T13:53:27.613324-07:00[America/Los_Angeles]
 |:------------------------------|:------------|:-------------------|:---------------------------------------------------------------------------------------------------------|
 | id                            | bigint      | Long               | 1                                                                                                        |
 | sample\_name                  | varchar2    | String             | JVM time: Asia/Kolkata\[2023-03-14T02:23:27.709533+05:30\] - all values are set by postgres \(defaults\) |
-| created\_at\_ldt              | timestamp   | LocalDateTime      | `2023-03-14T02:23:27.725945                      `                                                       |
-| created\_at\_ldt\_tz          | timestamptz | LocalDateTime      | `2023-03-14T02:23:27.725945                      `                                                       |
-| created\_at\_odt              | timestamp   | OffsetDateTime     | `2023-03-14T02:23:27.725945+05:30                `                                                       |
-| created\_at\_odt\_tz          | timestamptz | OffsetDateTime     | `2023-03-14T02:23:27.725945+05:30                `                                                       |
-| created\_at\_zdt              | timestamp   | ZonedDateTime      | `2023-03-14T02:23:27.725945+05:30\[Asia/Kolkata\]`                                                       |
-| created\_at\_zdt\_tz          | timestamptz | ZonedDateTime      | `2023-03-14T02:23:27.725945+05:30\[Asia/Kolkata\]`                                                       |
-| created\_at\_tstmp            | timestamp   | java.sql.Timestamp | `2023-03-14 02:23:27.725945                      `                                                       |
-| created\_at\_tstmp\_tz        | timestamptz | java.sql.Timestamp | `2023-03-14 02:23:27.725945                      `                                                       |
-| created\_at\_odt\_complex     | timestamp   | OffsetDateTime     | `2023-03-14T06:53:27.725945-01:00                `                                                       |
-| created\_at\_odt\_complex\_tz | timestamptz | OffsetDateTime     | `2023-03-13T19:53:27.725945-01:00                `                                                       |
-| created\_at\_zdt\_complex     | timestamptz | ZonedDateTime      | `2023-03-14T06:53:27.725945-01:00                `                                                       |
-| created\_at\_zdt\_complex\_tz | timestamptz | ZonedDateTime      | `2023-03-13T19:53:27.725945-01:00                `                                                       |
+| created\_at\_ldt              | timestamp   | LocalDateTime      | `2023-03-14T02:23:27.`                                                                                   |
+| created\_at\_ldt\_tz          | timestamptz | LocalDateTime      | `2023-03-14T02:23:27.`                                                                                   |
+| created\_at\_odt              | timestamp   | OffsetDateTime     | `2023-03-14T02:23:27.725945+05:`                                                                         |
+| created\_at\_odt\_tz          | timestamptz | OffsetDateTime     | `2023-03-14T02:23:27.725945+05:`                                                                         |
+| created\_at\_zdt              | timestamp   | ZonedDateTime      | `2023-03-14T02:23:27.725945+05:30\[Asia/Kolkata`                                                         |
+| created\_at\_zdt\_tz          | timestamptz | ZonedDateTime      | `2023-03-14T02:23:27.725945+05:30\[Asia/Kolkata`                                                         |
+| created\_at\_tstmp            | timestamp   | java.sql.Timestamp | `2023-03-14 02:23:27.`                                                                                   |
+| created\_at\_tstmp\_tz        | timestamptz | java.sql.Timestamp | `2023-03-14 02:23:27.`                                                                                   |
+| created\_at\_odt\_complex     | timestamp   | OffsetDateTime     | `2023-03-14T06:53:27.725945-01:`                                                                         |
+| created\_at\_odt\_complex\_tz | timestamptz | OffsetDateTime     | `2023-03-13T19:53:27.725945-01:`                                                                         |
+| created\_at\_zdt\_complex     | timestamptz | ZonedDateTime      | `2023-03-14T06:53:27.725945-01:`                                                                         |
+| created\_at\_zdt\_complex\_tz | timestamptz | ZonedDateTime      | `2023-03-13T19:53:27.725945-01:`                                                                         |
 |                               |             |                    |                                                                                                          |
 | id                            | bigint      | Long               | 2                                                                                                        |
 | sample\_name                  | varchar2    | String             | JVM time: Asia/Kolkata\[2023-03-14T02:23:27.738146+05:30\] - all values are set by jvm now\(\)           |
