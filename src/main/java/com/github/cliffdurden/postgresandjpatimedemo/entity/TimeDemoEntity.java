@@ -62,6 +62,18 @@ public class TimeDemoEntity {
     private ZonedDateTime createdAtZdtTz;
 
     @Column(
+            name = "created_at_instant",
+            columnDefinition = "timestamp default now()"
+    )
+    private Instant createdAtInstant;
+
+    @Column(
+            name = "created_at_instant_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    private Instant createdAtInstantTz;
+
+    @Column(
             name = "created_at_tstmp",
             columnDefinition = "timestamp default now()"
     )
@@ -78,7 +90,10 @@ public class TimeDemoEntity {
             columnDefinition = "timestamp default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_odt_complex_offset")
+    @TimeZoneColumn(
+            name = "created_at_odt_complex_offset",
+            columnDefinition = "integer"
+    )
     private OffsetDateTime createdAtOdtComplex;
 
     @Column(
@@ -86,7 +101,10 @@ public class TimeDemoEntity {
             columnDefinition = "timestamptz default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_odt_complex_tz_offset")
+    @TimeZoneColumn(
+            name = "created_at_odt_complex_tz_offset",
+            columnDefinition = "integer"
+    )
     private OffsetDateTime createdAtOdtComplexTz;
 
     @Column(
@@ -94,7 +112,10 @@ public class TimeDemoEntity {
             columnDefinition = "timestamp default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_zdt_complex_offset")
+    @TimeZoneColumn(
+            name = "created_at_zdt_complex_offset",
+            columnDefinition = "integer"
+    )
     private ZonedDateTime createdAtZdtComplex;
 
     @Column(
@@ -102,7 +123,65 @@ public class TimeDemoEntity {
             columnDefinition = "timestamptz default now()"
     )
     @TimeZoneStorage(TimeZoneStorageType.COLUMN)
-    @TimeZoneColumn(name = "created_at_zdt_complex_tz_offset")
+    @TimeZoneColumn(
+            name = "created_at_zdt_complex_tz_offset",
+            columnDefinition = "integer"
+    )
     private ZonedDateTime createdAtZdtComplexTz;
+
+    @Column(
+            name = "created_at_odt_native",
+            columnDefinition = "timestamp default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NATIVE)
+    private OffsetDateTime createdAtOdtNative;
+
+    @Column(
+            name = "created_at_odt_native_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NATIVE)
+    private OffsetDateTime createdAtOdtNativeTz;
+
+    @Column(
+            name = "created_at_odt_normalize",
+            columnDefinition = "timestamp default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NORMALIZE)
+    private OffsetDateTime createdAtOdtNormalize;
+
+    @Column(
+            name = "created_at_odt_normalize_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NORMALIZE)
+    private OffsetDateTime createdAtOdtNormalizeTz;
+
+    @Column(
+            name = "created_at_odt_normalize_utc",
+            columnDefinition = "timestamp default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NORMALIZE_UTC)
+    private OffsetDateTime createdAtOdtNormalizeUtc;
+
+    @Column(
+            name = "created_at_odt_normalize_utc_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.NORMALIZE_UTC)
+    private OffsetDateTime createdAtOdtNormalizeUtcTz;
+    @Column(
+            name = "created_at_odt_auto",
+            columnDefinition = "timestamp default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.AUTO)
+    private OffsetDateTime createdAtOdtAuto;
+
+    @Column(
+            name = "created_at_odt_auto_tz",
+            columnDefinition = "timestamptz default now()"
+    )
+    @TimeZoneStorage(TimeZoneStorageType.AUTO)
+    private OffsetDateTime createdAtOdtAutoTz;
 
 }

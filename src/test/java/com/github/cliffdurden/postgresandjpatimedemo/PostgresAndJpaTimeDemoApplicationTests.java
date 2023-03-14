@@ -62,7 +62,6 @@ class PostgresAndJpaTimeDemoApplicationTests {
 
     @BeforeEach
     void setUp() {
-        printCurrentTime();
         repository.deleteAll();
     }
 
@@ -72,7 +71,35 @@ class PostgresAndJpaTimeDemoApplicationTests {
     }
 
     @Test
+    void testDateTimeBehaviorWhenDateTimesArePredifined() {
+        String localDateTime = "2023-01-01T00:00:00.000000";
+        String zonedDateTime = "2023-01-01T00:00:00.000000+09:00[Asia/Tokyo]";
+        String offsetDateTime = "2023-01-01T00:00:00.000000+09:00";
+        printWorldTime(zonedDateTime);
+        log.info(ANSI_RED + "Predefined Time is: {}", zonedDateTime);
+        log.info(ANSI_RED + "JVM TimeZone is: {}", defaultTimeZoneId());
+        repository.save(timeDemoEntityDateTime(
+                localDateTime,
+                offsetDateTime,
+                zonedDateTime));
+        var timeDemoEntities = repository.findAll();
+        printEntities(timeDemoEntities);
+
+        ////////////////////////////////////////////////////////////
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Tokyo"));
+        ////////////////////////////////////////////////////////////
+        log.info(ANSI_RED + "JVM TimeZone has been changed to: {}", defaultTimeZoneId());
+        repository.save(timeDemoEntityDateTime(
+                localDateTime,
+                offsetDateTime,
+                zonedDateTime));
+        var timeDemoEntitiesAfterTzChanged = repository.findAll();
+        printEntities(timeDemoEntitiesAfterTzChanged);
+    }
+
+    @Test
     void testDateTimeBehavior() {
+        printWorldCurrentTime();
         log.info(ANSI_RED + "JVM TimeZone is: {}", defaultTimeZoneId());
         repository.save(timeDemoEntityDefaults());
         repository.save(timeDemoEntityJvmNow());
@@ -95,7 +122,6 @@ class PostgresAndJpaTimeDemoApplicationTests {
         printPreFormattedResult(resultFormattedOnDBSide);
     }
 
-
     /**
      * @return entity with empty datetime fields
      */
@@ -117,12 +143,54 @@ class PostgresAndJpaTimeDemoApplicationTests {
                 .createdAtOdtTz(OffsetDateTime.now())
                 .createdAtZdt(ZonedDateTime.now())
                 .createdAtZdtTz(ZonedDateTime.now())
+                .createdAtInstant(Instant.now())
+                .createdAtInstantTz(Instant.now())
                 .createdAtTstmp(java.sql.Timestamp.from(Instant.now()))
                 .createdAtTstmpTz(java.sql.Timestamp.from(Instant.now()))
                 .createdAtOdtComplex(OffsetDateTime.now())
                 .createdAtOdtComplexTz(OffsetDateTime.now())
                 .createdAtZdtComplex(ZonedDateTime.now())
                 .createdAtZdtComplexTz(ZonedDateTime.now())
+                .createdAtOdtNative(OffsetDateTime.now())
+                .createdAtOdtNativeTz(OffsetDateTime.now())
+                .createdAtOdtNormalize(OffsetDateTime.now())
+                .createdAtOdtNormalizeTz(OffsetDateTime.now())
+                .createdAtOdtNormalizeUtc(OffsetDateTime.now())
+                .createdAtOdtNormalizeUtcTz(OffsetDateTime.now())
+                .createdAtOdtAuto(OffsetDateTime.now())
+                .createdAtOdtAutoTz(OffsetDateTime.now())
+                .build();
+    }
+
+    private TimeDemoEntity timeDemoEntityDateTime(
+            String dateTime,
+            String dateTimeWithOffset,
+            String dateTimeWIthOffsetAndZone
+    ) {
+        return TimeDemoEntity.builder()
+                .sampleName("JVM time: " + defaultTimeZoneId() + "[" + OffsetDateTime.now() + "]" + " - all values are set with constant")
+                .createdAtLdt(LocalDateTime.parse(dateTime))
+                .createdAtLdtTz(LocalDateTime.parse(dateTime))
+                .createdAtOdt(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtTz(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtZdt(ZonedDateTime.parse(dateTimeWIthOffsetAndZone))
+                .createdAtZdtTz(ZonedDateTime.parse(dateTimeWIthOffsetAndZone))
+                .createdAtInstant(Instant.parse(dateTimeWithOffset))
+                .createdAtInstantTz(Instant.parse(dateTimeWithOffset))
+                .createdAtTstmp(java.sql.Timestamp.from(Instant.parse(dateTimeWithOffset)))
+                .createdAtTstmpTz(java.sql.Timestamp.from(Instant.parse(dateTimeWithOffset)))
+                .createdAtOdtComplex(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtComplexTz(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtZdtComplex(ZonedDateTime.parse(dateTimeWIthOffsetAndZone))
+                .createdAtZdtComplexTz(ZonedDateTime.parse(dateTimeWIthOffsetAndZone))
+                .createdAtOdtNative(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtNativeTz(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtNormalize(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtNormalizeTz(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtNormalizeUtc(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtNormalizeUtcTz(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtAuto(OffsetDateTime.parse(dateTimeWithOffset))
+                .createdAtOdtAutoTz(OffsetDateTime.parse(dateTimeWithOffset))
                 .build();
     }
 
@@ -143,23 +211,33 @@ class PostgresAndJpaTimeDemoApplicationTests {
     private String formatTimeDemoEntity(TimeDemoEntity entity) {
         return "" +
                 ANSI_GREEN + "\tJVM.now() at zone " + defaultTimeZoneId() + ": " + OffsetDateTime.now() + "\n" +
-                ANSI_GREEN + "\t-----------------------------------------------------------------------------------------------\n" +
-                ANSI_GREEN + "\tField                     | PostgreSql  |               Java | Value\n" +
-                ANSI_GREEN + "\t--------------------------|-------------|--------------------|---------------------------------\n" +
-                ANSI_GREEN + "\tid                        | bigint      |               Long | " + entity.getId() + "\n" +
-                ANSI_GREEN + "\tsample_name               | varchar2    |             String | " + entity.getSampleName() + "\n" +
-                ANSI_GREEN + "\tcreated_at_ldt            | timestamp   |      LocalDateTime | " + entity.getCreatedAtLdt() + "\n" +
-                ANSI_GREEN + "\tcreated_at_ldt_tz         | timestamptz |      LocalDateTime | " + entity.getCreatedAtLdtTz() + "\n" +
-                ANSI_GREEN + "\tcreated_at_odt            | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdt() + "\n" +
-                ANSI_GREEN + "\tcreated_at_odt_tz         | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtTz() + "\n" +
-                ANSI_GREEN + "\tcreated_at_zdt            | timestamp   |      ZonedDateTime | " + entity.getCreatedAtZdt() + "\n" +
-                ANSI_GREEN + "\tcreated_at_zdt_tz         | timestamptz |      ZonedDateTime | " + entity.getCreatedAtZdtTz() + "\n" +
-                ANSI_GREEN + "\tcreated_at_tstmp          | timestamp   | java.sql.Timestamp | " + entity.getCreatedAtTstmp() + "\n" +
-                ANSI_GREEN + "\tcreated_at_tstmp_tz       | timestamptz | java.sql.Timestamp | " + entity.getCreatedAtTstmpTz() + "\n" +
-                ANSI_GREEN + "\tcreated_at_odt_complex    | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtComplex() + "\n" +
-                ANSI_GREEN + "\tcreated_at_odt_complex_tz | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtComplexTz() + "\n" +
-                ANSI_GREEN + "\tcreated_at_zdt_complex    | timestamptz |      ZonedDateTime | " + entity.getCreatedAtZdtComplex() + "\n" +
-                ANSI_GREEN + "\tcreated_at_zdt_complex_tz | timestamptz |      ZonedDateTime | " + entity.getCreatedAtZdtComplexTz() + "\n" +
+                ANSI_GREEN + "\t-----------------------------------------------------------------------------------------------------\n" +
+                ANSI_GREEN + "\tField                           | PostgreSql  |               Java | Value\n" +
+                ANSI_GREEN + "\t--------------------------------|-------------|--------------------|---------------------------------\n" +
+                ANSI_GREEN + "\tid                              | bigint      |               Long | " + entity.getId() + "\n" +
+                ANSI_GREEN + "\tsample_name                     | varchar2    |             String | " + entity.getSampleName() + "\n" +
+                ANSI_GREEN + "\tcreated_at_ldt                  | timestamp   |      LocalDateTime | " + entity.getCreatedAtLdt() + "\n" +
+                ANSI_GREEN + "\tcreated_at_ldt_tz               | timestamptz |      LocalDateTime | " + entity.getCreatedAtLdtTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt                  | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdt() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_tz               | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_zdt                  | timestamp   |      ZonedDateTime | " + entity.getCreatedAtZdt() + "\n" +
+                ANSI_GREEN + "\tcreated_at_zdt_tz               | timestamptz |      ZonedDateTime | " + entity.getCreatedAtZdtTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_instant              | timestamp   |            Instant | " + entity.getCreatedAtInstant() + "\n" +
+                ANSI_GREEN + "\tcreated_at_instant_tz           | timestamptz |            Instant | " + entity.getCreatedAtInstantTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_tstmp                | timestamp   | java.sql.Timestamp | " + entity.getCreatedAtTstmp() + "\n" +
+                ANSI_GREEN + "\tcreated_at_tstmp_tz             | timestamptz | java.sql.Timestamp | " + entity.getCreatedAtTstmpTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_complex          | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtComplex() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_complex_tz       | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtComplexTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_zdt_complex          | timestamp   |      ZonedDateTime | " + entity.getCreatedAtZdtComplex() + "\n" +
+                ANSI_GREEN + "\tcreated_at_zdt_complex_tz       | timestamptz |      ZonedDateTime | " + entity.getCreatedAtZdtComplexTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_native           | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtNative() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_native_tz        | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtNativeTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_normalize        | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtNormalize() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_normalize_tz     | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtNormalizeTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_normalize_utc    | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtNormalizeUtc() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_normalize_utc_tz | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtNormalizeUtcTz() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_auto             | timestamp   |     OffsetDateTime | " + entity.getCreatedAtOdtAuto() + "\n" +
+                ANSI_GREEN + "\tcreated_at_odt_auto_tz          | timestamptz |     OffsetDateTime | " + entity.getCreatedAtOdtAutoTz() + "\n" +
                 "";
     }
 
@@ -177,8 +255,10 @@ class PostgresAndJpaTimeDemoApplicationTests {
                 "'" + ANSI_PURPLE + "\tcreated_at_ldt_tz                | timestamptz | ' || created_at_ldt_tz ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_odt                   | timestamp   | ' || created_at_odt ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_odt_tz                | timestamptz | ' || created_at_odt_tz ||  '\n' ||" +
-                "'" + ANSI_PURPLE + "\tcreated_at_zdt                   | timestamptz | ' || created_at_zdt ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_zdt                   | timestamp   | ' || created_at_zdt ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_zdt_tz                | timestamptz | ' || created_at_zdt_tz ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_instant               | timestamp   | ' || created_at_zdt_tz ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_instant_tz            | timestamptz | ' || created_at_zdt_tz ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_tstmp                 | timestamp   | ' || created_at_tstmp ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_tstmp_tz              | timestamptz | ' || created_at_tstmp_tz ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_odt_complex           | timestamp   | ' || created_at_odt_complex ||  '\n' ||" +
@@ -189,6 +269,14 @@ class PostgresAndJpaTimeDemoApplicationTests {
                 "'" + ANSI_PURPLE + "\tcreated_at_zdt_complex_offset    | integer     | ' || created_at_zdt_complex_offset ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_zdt_complex_tz        | timestamptz | ' || created_at_zdt_complex_tz ||  '\n' ||" +
                 "'" + ANSI_PURPLE + "\tcreated_at_zdt_complex_tz_offset | integer     | ' || created_at_zdt_complex_tz_offset ||  '\n' " +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_native            | timestamp   | ' || created_at_odt_native ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_native_tz         | timestamptz | ' || created_at_odt_native_tz ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_normalize         | timestamp   | ' || created_at_odt_normalize ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_normalize_tz      | timestamptz | ' || created_at_odt_normalize_tz ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_normalize_utc     | timestamp   | ' || created_at_odt_normalize_utc ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_normalize_utc_tz  | timestamptz | ' || created_at_odt_normalize_utc_tz ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_auto              | timestamp   | ' || created_at_odt_auto ||  '\n' ||" +
+                "'" + ANSI_PURPLE + "\tcreated_at_odt_auto_tz           | timestamptz | ' || created_at_odt_auto_tz  ||  '\n' ||" +
                 "from time_demo";
     }
 

@@ -62,6 +62,18 @@ databaseChangeLog:
                   type: timestamptz
                   defaultValue: now()
               - column:
+                  name: created_at_instant
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_instant_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
                   name: created_at_tstmp
                   constraints:
                     nullable: false
@@ -121,3 +133,51 @@ databaseChangeLog:
                     nullable: false
                   type: integer
                   defaultValue: "-3600"
+              - column:
+                  name: created_at_odt_native
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_native_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_normalize
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_normalize_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_normalize_utc
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_normalize_utc_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_auto
+                  constraints:
+                    nullable: false
+                  type: timestamp
+                  defaultValue: now()
+              - column:
+                  name: created_at_odt_auto_tz
+                  constraints:
+                    nullable: false
+                  type: timestamptz
+                  defaultValue: now()
